@@ -22,17 +22,17 @@ export function App({ role = 'farmer' }: AppProps) {
             <Route path="/marketplace" element={<Marketplace />} />
             <Route
               path="/produce"
-              element={role === 'farmer' ? <MyProduce /> : <Navigate to="/purchases" replace />} />
-            
+              element={role === 'farmer' ? <MyProduce /> : <Navigate to="/purchases" replace />}
+            />
             <Route
               path="/purchases"
-              element={role === 'buyer' ? <Purchases /> : <Navigate to="/produce" replace />} />
-            
+              element={role === 'buyer' ? <Purchases /> : <Navigate to="/produce" replace />}
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AppShell>
         <Toaster position="bottom-right" richColors closeButton />
       </MarketProvider>
-    </BrowserRouter>);
-
+    </BrowserRouter>
+  );
 }

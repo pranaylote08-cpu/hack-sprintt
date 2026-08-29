@@ -4,8 +4,8 @@ import {
   currentFarmer,
   incomingOffers as seedOffers,
   listingImages,
-  listings as seedListings } from
-'../data/listings';
+  listings as seedListings
+} from '../data/listings';
 import { Grade, Listing, Offer, Order } from '../types';
 
 export type Role = 'farmer' | 'buyer';
@@ -34,7 +34,7 @@ interface MarketContextValue {
 
 const MarketContext = createContext<MarketContextValue | null>(null);
 
-export function MarketProvider({ role, children }: {role: Role;children: ReactNode;}) {
+export function MarketProvider({ role, children }: { role: Role; children: ReactNode }) {
   const [listings, setListings] = useState<Listing[]>(seedListings);
   const [offers, setOffers] = useState<Offer[]>(seedOffers);
   const [orders, setOrders] = useState<Order[]>(seedOrders);
@@ -67,10 +67,12 @@ export function MarketProvider({ role, children }: {role: Role;children: ReactNo
       const target = prev.find((o) => o.id === offerId);
       if (target && next === 'accepted') {
         setListings((current) =>
-        current.map((listing) => listing.id === target.listingId ? { ...listing, status: 'reserved' } : listing)
+          current.map((listing) =>
+            listing.id === target.listingId ? { ...listing, status: 'reserved' } : listing
+          )
         );
       }
-      return prev.map((o) => o.id === offerId ? { ...o, status: next } : o);
+      return prev.map((o) => (o.id === offerId ? { ...o, status: next } : o));
     });
   }, []);
 
@@ -87,11 +89,11 @@ export function MarketProvider({ role, children }: {role: Role;children: ReactNo
     };
     setOrders((prev) => [order, ...prev]);
     setListings((prev) =>
-    prev.map((l) =>
-    l.id === listing.id ?
-    { ...l, status: quantityQuintal >= l.quantityQuintal ? 'sold' : 'reserved' } :
-    l
-    )
+      prev.map((l) =>
+        l.id === listing.id
+          ? { ...l, status: quantityQuintal >= l.quantityQuintal ? 'sold' : 'reserved' }
+          : l
+      )
     );
     return order;
   }, []);
@@ -99,19 +101,19 @@ export function MarketProvider({ role, children }: {role: Role;children: ReactNo
   const sendOffer = useCallback(
     (listing: Listing, pricePerQuintal: number, quantityQuintal: number, message: string) => {
       setOffers((prev) => [
-      {
-        id: `O-${Math.floor(600 + Math.random() * 300)}`,
-        listingId: listing.id,
-        buyerName: 'You',
-        company: 'Greenline Sourcing',
-        pricePerQuintal,
-        quantityQuintal,
-        message,
-        placedAgo: 'just now',
-        status: 'pending'
-      },
-      ...prev]
-      );
+        {
+          id: `O-${Math.floor(600 + Math.random() * 300)}`,
+          listingId: listing.id,
+          buyerName: 'You',
+          company: 'Greenline Sourcing',
+          pricePerQuintal,
+          quantityQuintal,
+          message,
+          placedAgo: 'just now',
+          status: 'pending'
+        },
+        ...prev
+      ]);
     },
     []
   );
